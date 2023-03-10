@@ -6,9 +6,9 @@ const Radio = require("../models/Radio.model");
 
 const API_URL = "http://de1.api.radio-browser.info/json";
 
-router.get("/country", async (req, res, next) => {
+router.get("/radio/:country", async (req, res, next) => {
   try {
-    const { country } = req.query;
+    const { country } = req.params;
 
     const countryUrl = `${API_URL}/stations/search`;
 
@@ -25,10 +25,10 @@ router.get("/country", async (req, res, next) => {
   }
 });
 
-router.get("/genre", async (req, res, next) => {
+router.get("/radio/:genre", async (req, res, next) => {
   try {
-    const { tags } = req.query;
-    const genreUrl = `${API_URL}/tags/${tags}?limit=1000`;
+    const { genre } = req.params;
+    const genreUrl = `${API_URL}/tags/${genre}?limit=1000`;
 
     const response = await axios.get(genreUrl);
 
@@ -38,7 +38,7 @@ router.get("/genre", async (req, res, next) => {
   }
 });
 
-router.get("/ranked", async (req, res, next) => {
+router.get("/radio/ranked", async (req, res, next) => {
   try {
     const voteUrl = `${API_URL}/stations/topvote?limit=100`;
 
@@ -73,7 +73,7 @@ router.get("/radio/:id", async (req, res, next) => {
   }
 });
 
-router.get("/allStations", async (req, res, next) => {
+router.get("/radio/allStations", async (req, res, next) => {
   try {
     const radios = Radio.find();
     if (!radios.length) {
@@ -96,7 +96,7 @@ router.get("/allStations", async (req, res, next) => {
   }
 });
 
-router.post("/radio", async (req, res, next) => {
+router.post("/radios", async (req, res, next) => {
   try {
     const { name, img, country, genre, ranking } = req.body;
 
