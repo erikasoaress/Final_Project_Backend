@@ -6,11 +6,11 @@ const Radio = require("../models/Radio.model");
 
 const API_URL = "http://de1.api.radio-browser.info/json";
 
-router.get("/radio/:country", async (req, res, next) => {
+router.get("/radios/country/:country", async (req, res, next) => {
   try {
     const { country } = req.params;
 
-    const countryUrl = `${API_URL}/stations/search`;
+    const countryUrl = `${API_URL}/stations/by-country/${country}`;
 
     const response = await axios.get(countryUrl, {
       params: {
@@ -25,7 +25,7 @@ router.get("/radio/:country", async (req, res, next) => {
   }
 });
 
-router.get("/radio/:genre", async (req, res, next) => {
+router.get("/radios/genre/:genre", async (req, res, next) => {
   try {
     const { genre } = req.params;
     const genreUrl = `${API_URL}/tags/${genre}?limit=1000`;
@@ -38,42 +38,21 @@ router.get("/radio/:genre", async (req, res, next) => {
   }
 });
 
-router.get("/radio/ranked", async (req, res, next) => {
+router.get("/radios/ranked", async (req, res, next) => {
   try {
     const voteUrl = `${API_URL}/stations/topvote?limit=100`;
 
     const response = await axios.get(voteUrl);
-
+   
     res.json(response.data);
   } catch (error) {
     res.json(error);
   }
 });
 
-router.get("/radio/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
 
-    const radioByIdUrl = `${API_URL}/stations/byuuid`;
 
-    const response = await axios.get(radioByIdUrl, {
-      params: {
-        uuids: id,
-      },
-    });
-    const foundRadio = await Radio.findOne({ name: response.data.name });
-
-    if (!foundRadio) {
-      res.json(response.data);
-    } else {
-      res.json(foundRadio);
-    }
-  } catch (error) {
-    res.json(error);
-  }
-});
-
-router.get("/radio/allStations", async (req, res, next) => {
+router.get("/radio/all-stations", async (req, res, next) => {
   try {
     const radios = Radio.find();
     if (!radios.length) {
@@ -111,6 +90,29 @@ router.post("/radios", async (req, res, next) => {
         ranking,
       });
       res.json(newRadio);
+    } else {
+      res.json(foundRadio);
+    }
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.get("/radios/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const radioByIdUrl = `${API_URL}/stations/byuuid`;
+
+    const response = await axios.get(radioByIdUrl, {
+      params: {
+        uuids: id,
+      },
+    });
+    const foundRadio = await Radio.findOne({ name: response.data.name });
+
+    if (!foundRadio) {
+      res.json(response.data);
     } else {
       res.json(foundRadio);
     }
