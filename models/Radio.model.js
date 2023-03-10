@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-const Radio = model("Radio", userSchema);
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const radioSchema = new Schema(
@@ -15,7 +14,7 @@ const radioSchema = new Schema(
         country: { 
             type: String 
         },
-        review: [ { type: Schema.Types.ObjectId, ref:'Review' } ],
+        reviews: [ { type: Schema.Types.ObjectId, ref:'Review' } ],
         genre: { 
         type: String 
 },
@@ -25,6 +24,7 @@ const radioSchema = new Schema(
 
         }
 })
+const Radio = model("Radio", radioSchema);
 
 module.exports = Radio;
 
