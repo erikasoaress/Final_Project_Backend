@@ -28,7 +28,7 @@ router.get("/radios/country/:country", async (req, res, next) => {
 router.get("/radios/genre/:genre", async (req, res, next) => {
   try {
     const { genre } = req.params;
-    const genreUrl = `${API_URL}/tags/${genre}?limit=1000`;
+    const genreUrl = `${API_URL}/tags/${genre}?limit=50`;
 
     const response = await axios.get(genreUrl);
 
@@ -40,7 +40,7 @@ router.get("/radios/genre/:genre", async (req, res, next) => {
 
 router.get("/radios/ranked", async (req, res, next) => {
   try {
-    const voteUrl = `${API_URL}/stations/topvote?limit=100`;
+    const voteUrl = `${API_URL}/stations/topvote?limit=50`;
 
     const response = await axios.get(voteUrl);
    
