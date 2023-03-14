@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 router.post("/review", isAuthenticated, async (req, res) => {
     try {
     const { comment,radioId } = req.body;
-    const {_id} = req.payload
+    const {_id} = req.payload;
 
     const newReview = await Review.create({comment, author: _id})
 
