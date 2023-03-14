@@ -6,7 +6,7 @@ const radioSchema = new Schema(
     {
         name: { 
             type: String, 
-            required: true 
+     
         },
         img: { 
             type: String 
@@ -20,7 +20,7 @@ const radioSchema = new Schema(
 },
         ranking : {
             type: Number,
-            required: true,
+  
 
         }
 })
