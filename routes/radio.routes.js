@@ -43,24 +43,22 @@ router.get("/radios/ranked", async (req, res, next) => {
     const voteUrl = `${API_URL}/stations/topvote?limit=50`;
 
     const response = await axios.get(voteUrl);
-   
+
     res.json(response.data);
   } catch (error) {
     res.json(error);
   }
 });
 
-
-
 router.get("/radio/all-stations", async (req, res, next) => {
   try {
-    const radios = Radio.find();
-    if (!radios.length) {
-      const response = await axios.get(
-        "http://de1.api.radio-browser.info/json/stations?limit=50"
-      );
+    /* const radios = Radio.find();
+    if (!radios.length) { */
+    const response = await axios.get(
+      "http://de1.api.radio-browser.info/json/stations?limit=50"
+    );
 
-      await response.data.map((radio) => {
+    /*       await response.data.map((radio) => {
         Radio.create({
           name: radio.name,
           img: radio.favicon,
@@ -68,8 +66,9 @@ router.get("/radio/all-stations", async (req, res, next) => {
           country: radio.country,
           ranking: radio.votes,
         });
-      });
-    }
+      }); 
+    }*/
+    res.json(response.data);
   } catch (error) {
     res.json(error);
   }
