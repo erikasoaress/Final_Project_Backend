@@ -52,25 +52,27 @@ router.get("/radios/ranked", async (req, res, next) => {
 
 router.get("/radio/all-stations", async (req, res, next) => {
   try {
-    const radios = await Radio.find();
+   const radios = await Radio.find();
 
-    if (radios.length == 0) {
-      const response = await axios.get(
-        "http://de1.api.radio-browser.info/json/stations?limit=50"
-      );
-      await response.data.map((radio) => {
-        Radio.create({
-          name: radio.name,
-          img: radio.favicon,
-          genre: radio.tags,
-          country: radio.country,
-          ranking: radio.votes,
-        });
+    if (radios.length == 0) { 
+    const response = await axios.get(
+      "http://de1.api.radio-browser.info/json/stations?limit=50"
+    );
+    await response.data.map((radio) => {
+      Radio.create({
+        name: radio.name,
+        img: radio.favicon,
+        genre: radio.tags,
+        country: radio.country,
+        ranking: radio.votes,
       });
-      res.json(response.data);
-    } else {
+    }); 
+    res.json(response.data);
+    }else  {
       res.json(radios);
+
     }
+
   } catch (error) {
     res.json(error);
   }
