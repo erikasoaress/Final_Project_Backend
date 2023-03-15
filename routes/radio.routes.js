@@ -53,7 +53,7 @@ router.get("/radios/ranked", async (req, res, next) => {
 router.get("/radio/all-stations", async (req, res, next) => {
   try {
       const response = await axios.get(
-        "http://de1.api.radio-browser.info/json/stations?limit=500"
+        "http://de1.api.radio-browser.info/json/stations?limit=1500"
       );
       res.json(response.data);
   } catch (error) {
