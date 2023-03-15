@@ -4,9 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User.model");
 
 router.get("/profile/:id", async (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.json("The profile was not found");
-  }
+  
   const { id } = req.params;
   try {
     const profile = await User.findById(id).populate("favoriteRadios");
