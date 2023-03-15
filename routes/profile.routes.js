@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const User = require("../models/User.model");
 
 router.get("/profile/:id", async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -17,21 +18,16 @@ router.get("/profile/:id", async (req, res, next) => {
 
 router.put("/profile/edit/:id", async (req, res, next) => {
   const { id } = req.params;
-  const { username, email, userPic, country, password } = req.body;
+  const { name, email } = req.body;
+  console.log(id, name, email);
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.json("The profile was not found");
-  }
   try {
-    const updatedProject = await User.findByIdAndUpdate(id, {
-      username,
+    const updatedProfile = await User.findByIdAndUpdate(id, {
+      name,
       email,
-      userPic,
-      country,
-      password,
     });
-
-    res.json(updatedProject);
+    console.log(updatedProfile);
+    res.json(updatedProfile);
   } catch (error) {
     res.json(error);
   }

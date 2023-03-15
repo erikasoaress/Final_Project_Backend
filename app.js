@@ -30,7 +30,7 @@ const radioRoutes = require("./routes/radio.routes");
 app.use("/api", radioRoutes);
 
 const profileRoutes = require("./routes/profile.routes");
-app.use("/", profileRoutes);
+app.use("/api", profileRoutes);
 
 const reviewRoutes = require("./routes/review.routes");
 app.use("/api", reviewRoutes);
