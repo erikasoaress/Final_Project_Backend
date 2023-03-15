@@ -7,12 +7,11 @@ const mongoose = require("mongoose");
 
 
 
-router.post("/review", isAuthenticated, async (req, res) => {
+router.post("/review", async (req, res) => {
     try {
-    const { comment,radioId } = req.body;
-    const {_id} = req.payload;
+    const { comment,radioId, userId } = req.body;
 
-    const newReview = await Review.create({comment, author: _id})
+    const newReview = await Review.create({ comment, author: userId });
 
     await Radio.findByIdAndUpdate(radioId, {$push: {reviews: newReview._id}})
     res.json(newReview)

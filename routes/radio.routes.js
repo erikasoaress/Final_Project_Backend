@@ -88,7 +88,26 @@ router.get("/radios/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const foundRadio = await Radio.findById(id);
+      const response = await axios.get(
+        `http://de1.api.radio-browser.info/json/stations/byuuid?uuids=${id}`
+      );
+
+      res.json(response.data);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.get("/apiRadios/:radioName", async (req, res, next) => {
+  try {
+    const { radioName } = req.params;
+
+    const allRadios = await Radio.find().populate("reviews");
+    let foundRadio;
+
+    const search = await allRadios.map((radio) => {
+      if (radio.name.includes(radioName)) foundRadio = radio;
+    });
 
     res.json(foundRadio);
   } catch (error) {
@@ -97,3 +116,6 @@ router.get("/radios/:id", async (req, res, next) => {
 });
 
 module.exports = router;
+
+
+
